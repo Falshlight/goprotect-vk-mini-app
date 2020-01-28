@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/goprotect-vk-mini-app/precache-manifest.9ddbed0fb4d9be5936ba2d901400798b.js"
+  "/goprotect-vk-mini-app/precache-manifest.eba08a46c6284be5fd2cadd04f1faf46.js"
 );
 
 self.addEventListener('message', (event) => {

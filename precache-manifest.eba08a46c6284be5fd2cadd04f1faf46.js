@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f78fdf1032f7fa210b7754d4c4183c6e",
+    "revision": "5d8ec5980ed4453b3727951314ae82c1",
     "url": "/goprotect-vk-mini-app/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/goprotect-vk-mini-app/static/js/2.ef1c874e.chunk.js"
   },
   {
-    "revision": "7d218751b322a90e7a3b",
-    "url": "/goprotect-vk-mini-app/static/js/main.a3f12916.chunk.js"
+    "revision": "52cb609795a45876421f",
+    "url": "/goprotect-vk-mini-app/static/js/main.3b12d4e5.chunk.js"
   },
   {
     "revision": "8473e9a2146183b4d4a3",
