@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/goprotect-vk-mini-app/static/js/main.66ea9b0a.chunk.js",
-    "main.js.map": "/goprotect-vk-mini-app/static/js/main.66ea9b0a.chunk.js.map",
+    "main.js": "/goprotect-vk-mini-app/static/js/main.c393f540.chunk.js",
+    "main.js.map": "/goprotect-vk-mini-app/static/js/main.c393f540.chunk.js.map",
     "runtime-main.js": "/goprotect-vk-mini-app/static/js/runtime-main.a8235852.js",
     "runtime-main.js.map": "/goprotect-vk-mini-app/static/js/runtime-main.a8235852.js.map",
     "static/css/2.4e89ce74.chunk.css": "/goprotect-vk-mini-app/static/css/2.4e89ce74.chunk.css",
-    "static/js/2.ef1c874e.chunk.js": "/goprotect-vk-mini-app/static/js/2.ef1c874e.chunk.js",
-    "static/js/2.ef1c874e.chunk.js.map": "/goprotect-vk-mini-app/static/js/2.ef1c874e.chunk.js.map",
+    "static/js/2.20cabb64.chunk.js": "/goprotect-vk-mini-app/static/js/2.20cabb64.chunk.js",
+    "static/js/2.20cabb64.chunk.js.map": "/goprotect-vk-mini-app/static/js/2.20cabb64.chunk.js.map",
     "index.html": "/goprotect-vk-mini-app/index.html",
-    "precache-manifest.ba1651c682a43e68afa2b756f0cd2646.js": "/goprotect-vk-mini-app/precache-manifest.ba1651c682a43e68afa2b756f0cd2646.js",
+    "precache-manifest.afe79e0c9fb875069b412c6dfd7ca937.js": "/goprotect-vk-mini-app/precache-manifest.afe79e0c9fb875069b412c6dfd7ca937.js",
     "service-worker.js": "/goprotect-vk-mini-app/service-worker.js",
     "static/css/2.4e89ce74.chunk.css.map": "/goprotect-vk-mini-app/static/css/2.4e89ce74.chunk.css.map"
   }
