@@ -117,7 +117,7 @@ return (
 
 			<h2 style={{fontSize: '20px', marginLeft: '15px', marginTop: '0', marginBottom: '0', paddingTop: '0'}}>Стоимость спортивной страховки на одного человека: {cost && (cost).toLocaleString('ru')} руб.</h2>
 			<Div>
-				{cost > 0 && <Button size="xl" level="primary" stretched onClick={() => {
+				{cost > 0 && <Button style={{cursor: 'pointer'}} size="xl" level="primary" stretched onClick={() => {
 					var pid = groupGoId ? groupGoId : '';
 					var url = "https://www.goprotect.ru/calc?product=1&partnerId="+pid+"&utm_medium=vk_widget&state=2&is_adult=1&orderType="+type_map[periodValue]+"&count_days="+days+"&sport="+sport+"&award="+award;
                     var link = document.createElement('a');
