@@ -116,9 +116,8 @@ return (
 			<DaysInput period={periodValue} />
 
 			<h2 style={{fontSize: '20px', marginLeft: '15px', marginTop: '0', marginBottom: '0', paddingTop: '0'}}>Стоимость спортивной страховки на одного человека: {cost && (cost).toLocaleString('ru')} руб.</h2>
-			<Div style={{display: 'flex'}}>
-				<Button size="xl" level="primary" stretched onClick={getCost}>Узнать стоимость</Button>
-				{(cost && cost > 0) && <Button size="xl" level="primary" stretched onClick={() => {
+			<Div>
+				{cost > 0 && <Button size="xl" level="primary" stretched onClick={() => {
 					var pid = groupGoId ? groupGoId : '';
 					window.location.href = "https://www.goprotect.ru/calc?product=1&partnerId="+pid+"&utm_medium=vk_widget&state=2&is_adult=1&orderType="+type_map[periodValue]+"&count_days="+days+"&sport="+sport+"&award="+award;
 				}}>Оформить онлайн</Button>}
