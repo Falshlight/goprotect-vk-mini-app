@@ -89,7 +89,7 @@ const Home = ({ id, go, fetchedUser, params, groupPin, groupGoId}) => {
 return (
 	<Panel id={id}>
 		<PanelHeader >GoProtect. Страхование спортсменов для тренировок и соревнований </PanelHeader>
-		{params.vk_viewer_group_role === 'admin' && <Div><Button size="xl" level="secondary" onClick={go} data-to="settings">Настройки приложения</Button></Div> }
+		{params.vk_viewer_group_role === 'admin' && <Div><Button size="xl" level="secondary" onClick={go} data-to="settings" style={{cursor: 'pointer'}}>Настройки приложения</Button></Div> }
 
 		<Group><img className="logo-image" src={logo} alt="GoProtect logo" style={{marginTop: '15px', marginLeft: '15px'}}/>
 			<Div style={{color: '#909499'}}>Принимается на всех соревнованиях, подходит для спортивных секций, тренировок, сборов, лагерей. Для взрослых и детей. 200+ видов спорта. Более 200 000 довольных клиентов.</Div>
@@ -119,8 +119,14 @@ return (
 			<Div>
 				{cost > 0 && <Button size="xl" level="primary" stretched onClick={() => {
 					var pid = groupGoId ? groupGoId : '';
-					window.location.href = "https://www.goprotect.ru/calc?product=1&partnerId="+pid+"&utm_medium=vk_widget&state=2&is_adult=1&orderType="+type_map[periodValue]+"&count_days="+days+"&sport="+sport+"&award="+award;
-				}}>Оформить онлайн</Button>}
+					var url = "https://www.goprotect.ru/calc?product=1&partnerId="+pid+"&utm_medium=vk_widget&state=2&is_adult=1&orderType="+type_map[periodValue]+"&count_days="+days+"&sport="+sport+"&award="+award;
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }}>Оформить онлайн</Button>}
 			</Div>
 		</FormLayout>
 		</Group>
