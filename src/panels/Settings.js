@@ -24,7 +24,7 @@ const Settings = ({ id, go, groupPin, groupGoId, saveSettings, defaultPin}) => {
     return (
         <Panel id={id}>
             <PanelHeader
-                left={<HeaderButton onClick={go} data-to="home">
+                left={<HeaderButton style={{cursor: 'pointer'}} onClick={go} data-to="home">
                     {osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
                 </HeaderButton>}>
                 Настройки приложения
