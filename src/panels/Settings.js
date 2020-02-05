@@ -20,7 +20,7 @@ const Settings = ({ id, go, groupPin, groupGoId, saveSettings, defaultPin}) => {
     const [newGroupPin, setNewGroupPin] = useState(groupPin === defaultPin ? null : groupPin);
     const [newGoId, setNewGoId] = useState(groupGoId);
 
-
+    // <Input defaultValue={groupPin === defaultPin ? '' : groupPin} onChange={e => setNewGroupPin(e.target.value)} top="Пин" type="text" />
     return (
         <Panel id={id}>
             <PanelHeader
@@ -35,7 +35,6 @@ const Settings = ({ id, go, groupPin, groupGoId, saveSettings, defaultPin}) => {
             </Group>
             <Group>
             <FormLayout>
-                <!--<Input defaultValue={groupPin === defaultPin ? '' : groupPin} onChange={e => setNewGroupPin(e.target.value)} top="Пин" type="text" />-->
                 <Input defaultValue={groupGoId} onChange={e => setNewGoId(e.target.value)} top="Идентификатор" type="text" />
                 <Div>
                     <Button style={{cursor: 'pointer'}} size="xl" level="primary" onClick={() => {
