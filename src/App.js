@@ -1,48 +1,1 @@
-import React, { useState, useEffect } from 'react';
-import connect from '@vkontakte/vk-connect';
-import View from '@vkontakte/vkui/dist/components/View/View';
-import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
-import fetch from 'axios';
-import '@vkontakte/vkui/dist/vkui.css';
-
-import Home from './panels/Home';
-import Sports from './panels/Sports';
-
-const App = () => {
-	const [activePanel, setActivePanel] = useState('home');
-	const [fetchedUser, setUser] = useState(null);
-	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
-
-	useEffect(() => {
-		connect.subscribe(({ detail: { type, data }}) => {
-			if (type === 'VKWebAppUpdateConfig') {
-				const schemeAttribute = document.createAttribute('scheme');
-				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
-				document.body.attributes.setNamedItem(schemeAttribute);
-			}
-		});
-		async function fetchData() {
-			const user = await connect.send('VKWebAppGetUserInfo');
-			setUser(user);
-			setPopout(null);
-		}
-		fetchData();
-
-
-	}, []);
-
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-	};
-
-	return (
-		<View activePanel={activePanel} popout={popout}>
-			<Home id='home' fetchedUser={fetchedUser} go={go} />
-			<Sports id='sports' go={go} Home={Home}/>
-		</View>
-
-	);
-};
-
-export default App;
-
+import React, { useState, useEffect } from 'react';import connect from '@vkontakte/vk-connect';import View from '@vkontakte/vkui/dist/components/View/View';import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';import fetch from 'axios';import '@vkontakte/vkui/dist/vkui.css';import Home from './panels/Home';import Settings from './panels/Settings';const secretKey = "8mGOLEcyIbA4JPle2mDo";const defaultPin = '5860caa2d8da976e911dda752c72760e';const App = () => {	const [activePanel, setActivePanel] = useState('home');	const [fetchedUser, setUser] = useState(null);	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);    const [groupPin, setGroupPin] = useState(defaultPin);    const [groupGoId, setGoId] = useState('');    const parseQueryString = (string) => {        return string.slice(1).split('&')            .map((queryParam) => {                let kvp = queryParam.split('=');                return {key: kvp[0], value: kvp[1]}            })            .reduce((query, kvp) => {                query[kvp.key] = kvp.value;                return query            }, {})    };    const qs = require('querystring');    const crypto = require('crypto');    const urlParams = parseQueryString(window.location.search);    const ordered = {};    Object.keys(urlParams).sort().forEach((key) => {        if (key.slice(0, 3) === 'vk_') {            ordered[key] = urlParams[key];        }    });    const stringParams = qs.stringify(ordered);    console.log(stringParams);    const paramsHash = crypto        .createHmac('sha256', secretKey)        .update(stringParams)        .digest()        .toString('base64')        .replace(/\+/g, '-')        .replace(/\//g, '_')        .replace(/=$/, '');    if (paramsHash !== urlParams.sign) {    	console.log('Неверная подпись!');    	throw 'Неверная подпись!';	}	useEffect(() => {		connect.subscribe(({ detail: { type, data }}) => {			if (type === 'VKWebAppUpdateConfig') {				const schemeAttribute = document.createAttribute('scheme');				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';				document.body.attributes.setNamedItem(schemeAttribute);			}		});		async function fetchData() {			const user = await connect.send('VKWebAppGetUserInfo');			setUser(user);			setPopout(null);		}		fetchData();        async function getGroupInfo() {            const response =                await fetch("https://flashlightservice.ml/vkapps/vk-people-protect/api.php?method=get-group-info&"+window.location.search.slice(1),                    { headers: {'Content-Type': 'application/json'}}                );            var group_info = response.data;            if (group_info.goid) {            	setGroupPin(group_info.pin);            	setGoId(group_info.goid);			}        }        getGroupInfo();	}, []);	const go = e => {		setActivePanel(e.currentTarget.dataset.to);	};	function goToPanel(panel) {		setActivePanel(panel);	}	async function saveSettings(newGroupPin, newGoId) {		setGroupPin(newGroupPin);		setGoId(newGoId);		await fetch("https://flashlightservice.ml/vkapps/vk-people-protect/api.php?method=save-group-info&group_pin="+newGroupPin+"&go_id="+newGoId+"&"+window.location.search.slice(1))	}	return (		<View activePanel={activePanel} popout={popout}>			<Home id='home' fetchedUser={fetchedUser} go={go} params={urlParams} groupPin={groupPin} groupGoId={groupGoId} />			<Settings id='settings' go={go} groupPin={groupPin} groupGoId={groupGoId} saveSettings={saveSettings} defaultPin={defaultPin}/>		</View>	);};export default App;

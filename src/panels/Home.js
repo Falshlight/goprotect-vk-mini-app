@@ -21,7 +21,7 @@ import { useState, useEffect } from 'react';
 const axios = require('axios');
 
 
-const Home = ({ id, go, fetchedUser}) => {
+const Home = ({ id, go, fetchedUser, params, groupPin, groupGoId}) => {
     const [periodValue, setPeriod] = useState('period1');
 	const [days, setDays] = useState(1);
 
@@ -31,6 +31,8 @@ const Home = ({ id, go, fetchedUser}) => {
     const [award, setAward] = useState(50000);
 
     const [end, setEnd] = useState(null);
+
+    const type_map = {period1: 10, period2: 30, period3: 20};
 
     async function getDataAxios() {
     	if (sports.length) return;
@@ -60,16 +62,15 @@ const Home = ({ id, go, fetchedUser}) => {
 		var period = props.period;
 		console.log(period);
 
-		if (period === 'period1' && (days > 30 || days || 1)) getCost();
-		else if (period === 'period2' && (days < 31 || days > 90)) getCost();
+		if (period === 'period1' && (days <= 30 && days >= 1)) getCost();
+		else if (period === 'period2' && (days >= 31 && days <= 90)) getCost();
 
         return <i style={{display: 'none'}}></i>;
 
 	}
 
 	function getCost() {
-		var type_map = {period1: 10, period2: 30, period3: 20};
-		var data = {nsCalc: {adult: 0, type: type_map[periodValue], sports: [parseInt(sport)], award: parseInt(award), duration: days, pin: '5860caa2d8da976e911dda752c72760e', fulltime: 0}};
+		var data = {nsCalc: {adult: 0, type: type_map[periodValue], sports: [parseInt(sport)], award: parseInt(award), duration: days, pin: groupPin, fulltime: 0}};
 		console.log(data);
 		axios.post('https://flashlightservice.ml/vkapps/vk-people-protect/api.php?method=calc', data)
             .then(function (response) {
@@ -83,13 +84,17 @@ const Home = ({ id, go, fetchedUser}) => {
 
 	console.log(periodValue, award, days);
 
+	//
+
 return (
 	<Panel id={id}>
-		<PanelHeader>GoProtect. Страхование спортсменов для тренировок и соревнований </PanelHeader>
+		<PanelHeader >GoProtect. Страхование спортсменов для тренировок и соревнований </PanelHeader>
+		{params.vk_viewer_group_role === 'admin' && <Div><Button size="xl" level="secondary" onClick={go} data-to="settings">Настройки приложения</Button></Div> }
+
 		<Group><img className="logo-image" src={logo} alt="GoProtect logo" style={{marginTop: '15px', marginLeft: '15px'}}/>
 			<Div style={{color: '#909499'}}>Принимается на всех соревнованиях, подходит для спортивных секций, тренировок, сборов, лагерей. Для взрослых и детей. 200+ видов спорта. Более 200 000 довольных клиентов.</Div>
 		</Group>
-		<Group title="РАСЧИТАТЬ СТОИМОСТЬ СПОРТИВНОЙ СТРАХОВКИ">
+		<Group>
 		<FormLayout>
 			<Select top="Выберите вид спорта" placeholder="Не выбрано" onChange={e => setSport(e.target.value)}>
 				{sports}
@@ -111,8 +116,12 @@ return (
 			<DaysInput period={periodValue} />
 
 			<h2 style={{fontSize: '20px', marginLeft: '15px', marginTop: '0', marginBottom: '0', paddingTop: '0'}}>Стоимость спортивной страховки на одного человека: {cost && (cost).toLocaleString('ru')} руб.</h2>
-			<Div>
-				<Button size="xl" level="primary" onClick={getCost}>Узнать стоимость</Button>
+			<Div style={{display: 'flex'}}>
+				<Button size="xl" level="primary" stretched onClick={getCost}>Узнать стоимость</Button>
+				{(cost && cost > 0) && <Button size="xl" level="primary" stretched onClick={() => {
+					var pid = groupGoId ? groupGoId : '';
+					window.location.href = "https://www.goprotect.ru/calc?product=1&partnerId="+pid+"&utm_medium=vk_widget&state=2&is_adult=1&orderType="+type_map[periodValue]+"&count_days="+days+"&sport="+sport+"&award="+award;
+				}}>Оформить онлайн</Button>}
 			</Div>
 		</FormLayout>
 		</Group>
